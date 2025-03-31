@@ -26,14 +26,30 @@ console.log("MongoDB URI:", process.env.MONGODB_URI);
 app.get('/', (req, res) => {
   res.send('Welcome to Sunrise Media House API');
 });
+const cors = require('cors');
+const express = require('express');
+
+
+// Allow requests from the frontend
+app.use(cors({
+    origin: 'https://sunrise-frontend-11.onrender.com'  // Replace with your frontend URL
+}));
+
+// Your routes
+app.post('/api/contact', (req, res) => {
+    // handle contact form submission
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI)
-  .then(() => console.log('Connected to MongoDB'))
+  .then(() => console.log('Connected to MongoDB server server'))
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+  console.log ('running');
 });
