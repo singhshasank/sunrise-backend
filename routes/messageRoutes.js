@@ -26,7 +26,7 @@ router.post('/', async (req, res) => {
     
     // Create a bot response
     const botResponse = new Message({
-      message: `Thanks for your message! Our team will get back to you soon.`,
+      message: `Thanks for your message! Our team will get back to you soon..`,
       isBot: true
     });
     
