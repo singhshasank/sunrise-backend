@@ -13,7 +13,7 @@ dotenv.config({ path: '.env.example' });
 const app = express();
 
 // Middleware
-app.use(cors());
+
 app.use(express.json());
 
 // Routes
