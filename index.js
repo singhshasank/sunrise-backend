@@ -10,18 +10,21 @@ dotenv.config();
 
 const app = express();
 
-// 🔥 REQUIRED FOR RENDER
-app.set('trust proxy', 1);
+// 🔥 HARD FIX FOR BROWSER PREFLIGHT
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-// 🔥 CORS MUST BE FIRST
-app.use(cors({
-  origin: '*',
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
 
-// 🔥 PRE-FLIGHT HANDLER (THIS FIXES YOUR ERROR)
-app.options('*', cors());
+  next();
+});
+
+// CORS (extra safety)
+app.use(cors());
 
 // Body parser
 app.use(express.json());
@@ -32,16 +35,14 @@ app.use('/api/messages', messageRoutes);
 
 // Root
 app.get('/', (req, res) => {
-  res.send('Sunrise Media House API is live');
+  res.send('API running');
 });
 
-// MongoDB
+// DB
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error(err));
+  .catch(console.error);
 
 // Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+app.listen(PORT, () => console.log(`Server on ${PORT}`));
