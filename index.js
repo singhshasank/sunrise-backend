@@ -32,7 +32,7 @@ const express = require('express');
 
 // Allow requests from the frontend
 app.use(cors({
-    origin: 'https://sunrise-frontend-11.onrender.com'  // Replace with your frontend URL
+    origin: 'https://www.sunrisemediahouse.com/'  // Replace with your frontend URL
 }));
 
 // Your routes
