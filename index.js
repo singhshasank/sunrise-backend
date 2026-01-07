@@ -9,7 +9,7 @@ const messageRoutes = require('./routes/messageRoutes');
 dotenv.config();
 
 const app = express();
-
+app.use(cors());
 // 🔥 HARD FIX FOR BROWSER PREFLIGHT
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
@@ -24,7 +24,7 @@ app.use((req, res, next) => {
 });
 
 // CORS (extra safety)
-app.use(cors());
+
 
 // Body parser
 app.use(express.json());
