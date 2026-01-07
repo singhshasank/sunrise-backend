@@ -9,20 +9,12 @@ const messageRoutes = require('./routes/messageRoutes');
 dotenv.config();
 
 const app = express();
-app.use(cors());
-// 🔥 HARD FIX FOR BROWSER PREFLIGHT
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,DELETE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
-
+app.use(cors({
+  origin: "https://www.sunrisemediahouse.com",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
 // CORS (extra safety)
 
 
